@@ -20,4 +20,9 @@ class NumberField extends TextField
     {
         return floatval($this->value);
     }
+
+    public function getPublicValue()
+    {
+        return floatval($this->value);
+    }
 }
