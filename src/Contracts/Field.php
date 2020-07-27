@@ -13,6 +13,11 @@ abstract class Field implements IField
         $this->value = $value;
     }
 
+    public function getValue()
+    {
+        return $this->value;
+    }
+
     public function getDatabaseValue()
     {
         return $this->value;

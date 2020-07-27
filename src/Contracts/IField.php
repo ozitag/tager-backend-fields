@@ -6,6 +6,8 @@ interface IField
 {
     public function setValue($value);
 
+    public function getValue();
+
     public function getDatabaseValue();
 
     public function getPublicValue();

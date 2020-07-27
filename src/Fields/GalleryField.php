@@ -37,6 +37,11 @@ class GalleryField extends Field
         return $result;
     }
 
+    public function getValue()
+    {
+        return $this->files();
+    }
+
     public function getAdminJson()
     {
         $result = [];

@@ -20,6 +20,11 @@ class FileField extends Field
         return $repository->find($this->value);
     }
 
+    public function getValue()
+    {
+        return $this->file();
+    }
+
     public function getAdminJson()
     {
         $file = $this->file();
