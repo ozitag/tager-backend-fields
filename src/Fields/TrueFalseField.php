@@ -12,6 +12,11 @@ class TrueFalseField extends Field
         return FieldType::TrueFalse;
     }
 
+    public function getValue()
+    {
+        return $this->value ? true : false;
+    }
+
     public function getAdminJson()
     {
         return $this->value ? true : false;

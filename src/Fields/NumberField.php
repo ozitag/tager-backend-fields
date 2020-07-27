@@ -10,6 +10,11 @@ class NumberField extends TextField
     {
         return FieldType::Number;
     }
+
+    public function getValue()
+    {
+        return floatval($this->value);
+    }
     
     public function getDatabaseValue()
     {
