@@ -1,0 +1,23 @@
+{
+  "name": "ozitag/tager-backend-fields",
+  "description": "Tager Fields",
+  "license": "MIT",
+  "homepage": "https://github.com/ozitag/tager-backend-core",
+  "authors": [
+    {
+      "name": "Vital Ozierski <v.ozierski@ozitag.com>",
+      "email": "v.ozierski@ozitag.com",
+      "homepage": "https://ozitag.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "ozitag/tager-backend-core": "^1.2",
+    "ozerich/laravel-filestorage-db": "^0.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "OZiTAG\\Tager\\Backend\\Fields\\": "src"
+    }
+  }
+}
