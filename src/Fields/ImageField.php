@@ -10,4 +10,14 @@ class ImageField extends FileField
     {
         return FieldType::Image;
     }
+
+    public function getAdminJson()
+    {
+        $file = $this->file();
+        if (!$file) {
+            return null;
+        }
+
+        return $file->getUrl();
+    }
 }

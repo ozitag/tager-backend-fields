@@ -14,7 +14,7 @@ class FileField extends Field
         return FieldType::File;
     }
 
-    private function file()
+    protected function file()
     {
         $repository = new FileRepository(new File());
         return $repository->find($this->value);
@@ -27,12 +27,7 @@ class FileField extends Field
 
     public function getAdminJson()
     {
-        $file = $this->file();
-        if (!$file) {
-            return null;
-        }
-
-        return $file->getUrl();
+        return $this->getAdminFullJson();
     }
 
     public function getAdminFullJson()
