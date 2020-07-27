@@ -4,35 +4,10 @@ namespace OZiTAG\Tager\Backend\Fields\Fields;
 
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
-class UrlField extends Field
+class UrlField extends TextField
 {
     public function getType()
     {
         return FieldType::Url;
-    }
-
-    public function setValue($value)
-    {
-
-    }
-
-    public function getValue()
-    {
-
-    }
-
-    public function getAdminJson()
-    {
-
-    }
-
-    public function getPublicJson()
-    {
-
-    }
-
-    public function getDatabaseValue()
-    {
-
     }
 }

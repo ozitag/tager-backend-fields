@@ -2,6 +2,9 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Fields;
 
+use Ozerich\FileStorage\Models\File;
+use Ozerich\FileStorage\Repositories\FileRepository;
+use OZiTAG\Tager\Backend\Fields\Contracts\Field;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
 class GalleryField extends Field
@@ -11,28 +14,69 @@ class GalleryField extends Field
         return FieldType::Gallery;
     }
 
-    public function setValue($value)
+    /**
+     * @return File[]
+     */
+    private function files()
     {
+        $items = $this->value ? explode(',', $this->value) : [];
+        if (empty($items)) {
+            return [];
+        }
 
-    }
+        $result = [];
 
-    public function getValue()
-    {
+        $repository = new FileRepository(new File());
+        foreach ($items as $item) {
+            $model = $repository->find($item);
+            if ($model) {
+                $result[] = $model;
+            }
+        }
 
+        return $result;
     }
 
     public function getAdminJson()
     {
+        $result = [];
 
+        foreach ($this->files() as $file) {
+            $result[] = $file->getUrl();
+        }
+
+        return $result;
     }
 
-    public function getPublicJson()
+    public function getAdminFullJson()
     {
+        $result = [];
 
+        foreach ($this->files() as $file) {
+            $result[] = $file->getShortJson();
+        }
+
+        return $result;
+    }
+
+    public function getPublicValue()
+    {
+        $result = [];
+
+        foreach ($this->files() as $file) {
+            $result[] = $file->getFullJson();
+        }
+
+        return $result;
+    }
+
+    public function getFileIds()
+    {
+        return $this->value;
     }
 
     public function getDatabaseValue()
     {
-
+        return implode(',', $this->value);
     }
 }

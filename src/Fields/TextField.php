@@ -2,6 +2,7 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Fields;
 
+use OZiTAG\Tager\Backend\Fields\Contracts\Field;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
 class TextField extends Field
@@ -11,28 +12,13 @@ class TextField extends Field
         return FieldType::Text;
     }
 
-    public function setValue($value)
-    {
-
-    }
-
-    public function getValue()
-    {
-
-    }
-
     public function getAdminJson()
     {
-
+        return (string)$this->value;
     }
 
-    public function getPublicJson()
+    public function getPublicValue()
     {
-
-    }
-
-    public function getDatabaseValue()
-    {
-
+        return (string)$this->value;
     }
 }

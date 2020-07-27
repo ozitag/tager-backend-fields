@@ -2,6 +2,7 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Fields;
 
+use OZiTAG\Tager\Backend\Fields\Contracts\Field;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
 class TrueFalseField extends Field
@@ -11,28 +12,18 @@ class TrueFalseField extends Field
         return FieldType::TrueFalse;
     }
 
-    public function setValue($value)
-    {
-
-    }
-
-    public function getValue()
-    {
-
-    }
-
     public function getAdminJson()
     {
-
+        return $this->value ? true : false;
     }
 
-    public function getPublicJson()
+    public function getPublicValue()
     {
-
+        return $this->value ? true : false;
     }
 
     public function getDatabaseValue()
     {
-
+        return $this->value ? 1 : 0;
     }
 }

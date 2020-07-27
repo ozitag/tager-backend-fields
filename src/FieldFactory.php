@@ -2,6 +2,7 @@
 
 namespace OZiTAG\Tager\Backend\Fields;
 
+use OZiTAG\Tager\Backend\Fields\Contracts\IField;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 use OZiTAG\Tager\Backend\Fields\Fields\ColorField;
 use OZiTAG\Tager\Backend\Fields\Fields\DateField;
@@ -21,6 +22,10 @@ use OZiTAG\Tager\Backend\Fields\Fields\UrlField;
 
 class FieldFactory
 {
+    /**
+     * @param $fieldType
+     * @return IField
+     */
     public static function create($fieldType)
     {
         switch ($fieldType) {
