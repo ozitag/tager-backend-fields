@@ -82,6 +82,6 @@ class GalleryField extends Field
 
     public function getDatabaseValue()
     {
-        return implode(',', $this->value);
+        return $this->value ? implode(',', $this->value) : null;
     }
 }
