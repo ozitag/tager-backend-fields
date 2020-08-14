@@ -2,6 +2,7 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Fields;
 
+use Illuminate\Database\Eloquent\Collection;
 use Ozerich\FileStorage\Models\File;
 use Ozerich\FileStorage\Repositories\FileRepository;
 use OZiTAG\Tager\Backend\Fields\Contracts\Field;
@@ -19,16 +20,22 @@ class GalleryField extends Field
      */
     private function files()
     {
-        $items = $this->value ? explode(',', $this->value) : [];
+        if ($this->value instanceof Collection || is_array($this->value)) {
+            $items = $this->value;
+        } else {
+            $items = $this->value ? explode(',', $this->value) : [];
+        }
+
         if (empty($items)) {
             return [];
         }
 
         $result = [];
 
-        $repository = new FileRepository(new File());
+        $fileRepository = new FileRepository(new File());
+
         foreach ($items as $item) {
-            $model = $repository->find($item);
+            $model = $item instanceof File ? $item : $fileRepository->find($item);
             if ($model) {
                 $result[] = $model;
             }
