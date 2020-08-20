@@ -2,7 +2,7 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Contracts;
 
-interface IField
+interface IType
 {
     public function setValue($value);
 

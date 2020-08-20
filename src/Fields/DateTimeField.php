@@ -2,12 +2,13 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Fields;
 
+use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
-class DateTimeField extends TextField
+class DateTimeField extends Field
 {
-    public function getType()
+    public function __construct($label)
     {
-        return FieldType::DateTime;
+        parent::__construct($label, FieldType::DateTime);
     }
 }

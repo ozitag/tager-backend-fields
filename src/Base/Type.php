@@ -1,10 +1,11 @@
 <?php
 
-namespace OZiTAG\Tager\Backend\Fields\Contracts;
+namespace OZiTAG\Tager\Backend\Fields\Base;
 
 use Ozerich\FileStorage\Storage;
+use OZiTAG\Tager\Backend\Fields\Contracts\IType;
 
-abstract class Field implements IField
+abstract class Type implements IType
 {
     protected $value = null;
 

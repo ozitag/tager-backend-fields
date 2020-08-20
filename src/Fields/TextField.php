@@ -2,23 +2,13 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Fields;
 
-use OZiTAG\Tager\Backend\Fields\Contracts\Field;
+use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
 class TextField extends Field
 {
-    public function getType()
+    public function __construct($label)
     {
-        return FieldType::Text;
-    }
-
-    public function getAdminJson()
-    {
-        return (string)$this->value;
-    }
-
-    public function getPublicValue()
-    {
-        return (string)$this->value;
+        parent::__construct($label, FieldType::Text);
     }
 }

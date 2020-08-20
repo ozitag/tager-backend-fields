@@ -2,12 +2,13 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Fields;
 
+use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
-class SelectField extends TextField
+class SelectField extends Field
 {
-    public function getType()
+    public function __construct($label)
     {
-        return FieldType::Select;
+        parent::__construct($label, FieldType::Select);
     }
 }

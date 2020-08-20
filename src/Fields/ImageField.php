@@ -2,22 +2,15 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Fields;
 
+use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
-class ImageField extends FileField
+class ImageField extends Field
 {
-    public function getType()
+    public function __construct($label, $scenario)
     {
-        return FieldType::Image;
-    }
+        parent::__construct($label, FieldType::Image);
 
-    public function getAdminJson()
-    {
-        $file = $this->file();
-        if (!$file) {
-            return null;
-        }
-
-        return $file->getUrl();
+        $this->setMetaParam('scenario', $scenario);
     }
 }

@@ -2,27 +2,13 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Fields;
 
+use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
-class NumberField extends TextField
+class NumberField extends Field
 {
-    public function getType()
+    public function __construct($label)
     {
-        return FieldType::Number;
-    }
-
-    public function getValue()
-    {
-        return floatval($this->value);
-    }
-    
-    public function getDatabaseValue()
-    {
-        return floatval($this->value);
-    }
-
-    public function getPublicValue()
-    {
-        return floatval($this->value);
+        parent::__construct($label, FieldType::Number);
     }
 }

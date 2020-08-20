@@ -1,13 +1,14 @@
 <?php
 
-namespace OZiTAG\Tager\Backend\Fields\Fields;
+namespace OZiTAG\Tager\Backend\Fields\Structures;
 
+use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
-class MultiSelectField extends TextField
+class MultiSelectField extends Field
 {
-    public function getType()
+    public function __construct($label)
     {
-        return FieldType::MultiSelect;
+        parent::__construct($label, FieldType::MultiSelect);
     }
 }
