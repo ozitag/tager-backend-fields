@@ -21,22 +21,22 @@ abstract class Type implements IType
 
     public function getDatabaseValue()
     {
-        return $this->value;
+        return $this->getValue();
     }
 
     public function getPublicValue()
     {
-        return $this->value;
+        return $this->getValue();
     }
 
     public function getAdminJson()
     {
-        return $this->value;
+        return $this->getValue();
     }
 
     public function getAdminFullJson()
     {
-        return $this->value;
+        return $this->getValue();
     }
 
     public function getFileIds()

@@ -21,6 +21,8 @@ class FieldType extends Enum
     const Gallery = 'GALLERY';
     const File = 'FILE';
     const Map = 'MAP';
+    const Button = 'BUTTON';
+    const Template = 'TEMPLATE';
 
     const Repeater = 'REPEATER';
 }

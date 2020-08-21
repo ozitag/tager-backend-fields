@@ -5,6 +5,7 @@ namespace OZiTAG\Tager\Backend\Fields;
 use OZiTAG\Tager\Backend\Fields\Contracts\IField;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 use OZiTAG\Tager\Backend\Fields\Exceptions\InvalidTypeException;
+use OZiTAG\Tager\Backend\Fields\Types\ButtonType;
 use OZiTAG\Tager\Backend\Fields\Types\ColorType;
 use OZiTAG\Tager\Backend\Fields\Types\DateTimeType;
 use OZiTAG\Tager\Backend\Fields\Types\DateType;
@@ -17,6 +18,7 @@ use OZiTAG\Tager\Backend\Fields\Types\MultiSelectType;
 use OZiTAG\Tager\Backend\Fields\Types\NumberType;
 use OZiTAG\Tager\Backend\Fields\Types\SelectType;
 use OZiTAG\Tager\Backend\Fields\Types\StringType;
+use OZiTAG\Tager\Backend\Fields\Types\TemplateType;
 use OZiTAG\Tager\Backend\Fields\Types\TextType;
 use OZiTAG\Tager\Backend\Fields\Types\TrueFalseType;
 use OZiTAG\Tager\Backend\Fields\Types\UrlType;
@@ -60,6 +62,10 @@ class TypeFactory
                 return new FileType();
             case FieldType::Map:
                 return new MapType();
+            case FieldType::Button:
+                return new ButtonType();
+            case FieldType::Template:
+                return new TemplateType();
             default:
                 throw new InvalidTypeException('Type "' . $fieldType . " can not be recognized");
         }
