@@ -9,6 +9,6 @@ class ButtonField extends Field
 {
     public function __construct($label)
     {
-        parent::__construct($label, FieldType::Repeater);
+        parent::__construct($label, FieldType::Button);
     }
 }
