@@ -2,6 +2,8 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Types;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\App;
 use Ozerich\FileStorage\Models\File;
 use Ozerich\FileStorage\Repositories\FileRepository;
 use OZiTAG\Tager\Backend\Fields\Base\Type;
@@ -9,15 +11,39 @@ use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
 class FileType extends Type
 {
+    private $fileRepository;
+
+    public function __construct()
+    {
+        $this->fileRepository = App::make(FileRepository::class);
+    }
+
     public function getType()
     {
         return FieldType::File;
     }
 
+    public function setValue($value)
+    {
+        if (is_array($value)) {
+            return parent::setValue($value[0]);
+        }
+
+        if ($value instanceof Collection) {
+            return parent::setValue($value->first()->id);
+        }
+
+        return parent::setValue($value);
+    }
+
+    public function isFileType()
+    {
+        return true;
+    }
+
     protected function file()
     {
-        $repository = new FileRepository(new File());
-        return $repository->find($this->value);
+        return $this->fileRepository->find($this->value);
     }
 
     public function getValue()

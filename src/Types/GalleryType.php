@@ -3,6 +3,7 @@
 namespace OZiTAG\Tager\Backend\Fields\Types;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\App;
 use Ozerich\FileStorage\Models\File;
 use Ozerich\FileStorage\Repositories\FileRepository;
 use OZiTAG\Tager\Backend\Fields\Base\Type;
@@ -10,9 +11,21 @@ use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
 class GalleryType extends Type
 {
+    private $fileRepository;
+
+    public function __construct()
+    {
+        $this->fileRepository = App::make(FileRepository::class);
+    }
+
     public function getType()
     {
         return FieldType::Gallery;
+    }
+
+    public function isFileType()
+    {
+        return true;
     }
 
     /**
@@ -32,10 +45,8 @@ class GalleryType extends Type
 
         $result = [];
 
-        $fileRepository = new FileRepository(new File());
-
         foreach ($items as $item) {
-            $model = $item instanceof File ? $item : $fileRepository->find($item);
+            $model = $item instanceof File ? $item : $this->fileRepository->find($item);
             if ($model) {
                 $result[] = $model;
             }

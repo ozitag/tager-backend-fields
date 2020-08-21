@@ -2,6 +2,8 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Base;
 
+use OZiTAG\Tager\Backend\Fields\TypeFactory;
+
 abstract class Field
 {
     private $type;
@@ -43,5 +45,18 @@ abstract class Field
             'label' => $this->getLabel(),
             'meta' => empty($this->getMeta()) ? new \stdClass() : $this->getMeta()
         ];
+    }
+
+    public function getMetaParamValue($param)
+    {
+        return isset($this->meta[$param]) ? $this->meta[$param] : null;
+    }
+
+    /**
+     * @return Type
+     */
+    public function getTypeInstance()
+    {
+        return TypeFactory::create($this->type);
     }
 }

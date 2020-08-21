@@ -2,9 +2,10 @@
 
 namespace OZiTAG\Tager\Backend\Fields;
 
-use OZiTAG\Tager\Backend\Fields\Exceptions\InvalidTypeException;
 use OZiTAG\Tager\Backend\Fields\Base\Field;
+use OZiTAG\Tager\Backend\Fields\Contracts\IField;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
+use OZiTAG\Tager\Backend\Fields\Exceptions\InvalidTypeException;
 use OZiTAG\Tager\Backend\Fields\Fields\ButtonField;
 use OZiTAG\Tager\Backend\Fields\Fields\ColorField;
 use OZiTAG\Tager\Backend\Fields\Fields\DateField;
@@ -16,19 +17,37 @@ use OZiTAG\Tager\Backend\Fields\Fields\ImageField;
 use OZiTAG\Tager\Backend\Fields\Fields\MapField;
 use OZiTAG\Tager\Backend\Fields\Fields\MultiSelectField;
 use OZiTAG\Tager\Backend\Fields\Fields\NumberField;
+use OZiTAG\Tager\Backend\Fields\Fields\RepeaterField;
 use OZiTAG\Tager\Backend\Fields\Fields\SelectField;
 use OZiTAG\Tager\Backend\Fields\Fields\StringField;
 use OZiTAG\Tager\Backend\Fields\Fields\TemplateField;
 use OZiTAG\Tager\Backend\Fields\Fields\TextField;
 use OZiTAG\Tager\Backend\Fields\Fields\TrueFalseField;
 use OZiTAG\Tager\Backend\Fields\Fields\UrlField;
+use OZiTAG\Tager\Backend\Fields\Types\ButtonType;
+use OZiTAG\Tager\Backend\Fields\Types\ColorType;
+use OZiTAG\Tager\Backend\Fields\Types\DateTimeType;
+use OZiTAG\Tager\Backend\Fields\Types\DateType;
+use OZiTAG\Tager\Backend\Fields\Types\FileType;
+use OZiTAG\Tager\Backend\Fields\Types\GalleryType;
+use OZiTAG\Tager\Backend\Fields\Types\HtmlType;
+use OZiTAG\Tager\Backend\Fields\Types\ImageType;
+use OZiTAG\Tager\Backend\Fields\Types\MapType;
+use OZiTAG\Tager\Backend\Fields\Types\MultiSelectType;
+use OZiTAG\Tager\Backend\Fields\Types\NumberType;
+use OZiTAG\Tager\Backend\Fields\Types\SelectType;
+use OZiTAG\Tager\Backend\Fields\Types\StringType;
+use OZiTAG\Tager\Backend\Fields\Types\TemplateType;
+use OZiTAG\Tager\Backend\Fields\Types\TextType;
+use OZiTAG\Tager\Backend\Fields\Types\TrueFalseType;
+use OZiTAG\Tager\Backend\Fields\Types\UrlType;
 
 class FieldFactory
 {
     /**
      * @param string $type
      * @param string $label
-     * @param array $meta
+     * @param string $meta
      * @return Field
      */
     public static function create($type, $label, $meta = [])
@@ -68,8 +87,10 @@ class FieldFactory
                 return new ButtonField($label);
             case FieldType::Template:
                 return new TemplateField($label);
+            case FieldType::Repeater:
+                return new RepeaterField($label);
             default:
-                throw new InvalidTypeException('Type "' . $type . " can not be recognized");
+                throw new InvalidTypeException('Type "' . $fieldType . " can not be recognized");
         }
     }
 }

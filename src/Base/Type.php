@@ -44,6 +44,11 @@ abstract class Type implements IType
         return [];
     }
 
+    public function isFileType()
+    {
+        return false;
+    }
+
     public function hasFiles()
     {
         return !empty($this->getFileIds());
@@ -53,7 +58,7 @@ abstract class Type implements IType
     {
         $fileStorage = new Storage();
 
-        foreach($this->getFileIds() as $fileId){
+        foreach ($this->getFileIds() as $fileId) {
             $fileStorage->setFileScenario($fileId, $scenario);
         }
     }

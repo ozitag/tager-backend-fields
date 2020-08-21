@@ -4,13 +4,10 @@ namespace OZiTAG\Tager\Backend\Fields\Utils;
 
 use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\FieldFactory;
+use OZiTAG\Tager\Backend\Fields\Fields\RepeaterField;
 
 class ConfigLoader
 {
-    /**
-     * @param array $fieldsConfig
-     * @return Field[]
-     */
     public static function loadFieldsFromConfig($fieldsConfig)
     {
         $result = [];
@@ -23,6 +20,9 @@ class ConfigLoader
 
                     try {
                         $fieldModel = FieldFactory::create($field['type'], $field['label'], $field['meta'] ?? []);
+                        if ($fieldModel instanceof RepeaterField) {
+                            $fieldModel->setFields($field['fields']);
+                        }
                     } catch (\Exception $exception) {
                         continue;
                     }

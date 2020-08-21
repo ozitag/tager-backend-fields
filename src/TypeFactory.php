@@ -2,7 +2,6 @@
 
 namespace OZiTAG\Tager\Backend\Fields;
 
-use OZiTAG\Tager\Backend\Fields\Base\Type;
 use OZiTAG\Tager\Backend\Fields\Contracts\IField;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 use OZiTAG\Tager\Backend\Fields\Exceptions\InvalidTypeException;
@@ -17,6 +16,7 @@ use OZiTAG\Tager\Backend\Fields\Types\ImageType;
 use OZiTAG\Tager\Backend\Fields\Types\MapType;
 use OZiTAG\Tager\Backend\Fields\Types\MultiSelectType;
 use OZiTAG\Tager\Backend\Fields\Types\NumberType;
+use OZiTAG\Tager\Backend\Fields\Types\RepeaterType;
 use OZiTAG\Tager\Backend\Fields\Types\SelectType;
 use OZiTAG\Tager\Backend\Fields\Types\StringType;
 use OZiTAG\Tager\Backend\Fields\Types\TemplateType;
@@ -27,12 +27,12 @@ use OZiTAG\Tager\Backend\Fields\Types\UrlType;
 class TypeFactory
 {
     /**
-     * @param $type
-     * @return Type
+     * @param $fieldType
+     * @return IField
      */
-    public static function create($type)
+    public static function create($fieldType)
     {
-        switch ($type) {
+        switch ($fieldType) {
             case FieldType::String:
                 return new StringType();
             case FieldType::Text:
@@ -67,8 +67,10 @@ class TypeFactory
                 return new ButtonType();
             case FieldType::Template:
                 return new TemplateType();
+            case FieldType::Repeater:
+                return new RepeaterType();
             default:
-                throw new InvalidTypeException('Type "' . $type . " can not be recognized");
+                throw new InvalidTypeException('Type "' . $fieldType . " can not be recognized");
         }
     }
 }

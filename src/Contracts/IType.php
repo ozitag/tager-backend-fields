@@ -17,4 +17,6 @@ interface IType
     public function getAdminFullJson();
 
     public function getFileIds();
+
+    public function isFileType();
 }
