@@ -35,4 +35,13 @@ abstract class Field
     {
         return $this->meta;
     }
+
+    public function getJson()
+    {
+        return [
+            'type' => $this->getType(),
+            'label' => $this->getLabel(),
+            'meta' => empty($this->getMeta()) ? new \stdClass() : $this->getMeta()
+        ];
+    }
 }

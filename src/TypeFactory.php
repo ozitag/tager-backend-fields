@@ -2,6 +2,7 @@
 
 namespace OZiTAG\Tager\Backend\Fields;
 
+use OZiTAG\Tager\Backend\Fields\Base\Type;
 use OZiTAG\Tager\Backend\Fields\Contracts\IField;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 use OZiTAG\Tager\Backend\Fields\Exceptions\InvalidTypeException;
@@ -26,12 +27,12 @@ use OZiTAG\Tager\Backend\Fields\Types\UrlType;
 class TypeFactory
 {
     /**
-     * @param $fieldType
-     * @return IField
+     * @param $type
+     * @return Type
      */
-    public static function create($fieldType)
+    public static function create($type)
     {
-        switch ($fieldType) {
+        switch ($type) {
             case FieldType::String:
                 return new StringType();
             case FieldType::Text:
@@ -67,7 +68,7 @@ class TypeFactory
             case FieldType::Template:
                 return new TemplateType();
             default:
-                throw new InvalidTypeException('Type "' . $fieldType . " can not be recognized");
+                throw new InvalidTypeException('Type "' . $type . " can not be recognized");
         }
     }
 }
