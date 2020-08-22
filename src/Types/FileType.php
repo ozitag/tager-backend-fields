@@ -26,14 +26,17 @@ class FileType extends Type
     public function setValue($value)
     {
         if (is_array($value)) {
-            return parent::setValue($value[0]);
+            parent::setValue(count($value) > 1 ? $value[0] : null);
+        } else if ($value instanceof Collection) {
+            $first = $value->first();
+            if ($first) {
+                parent::setValue($first);
+            } else {
+                parent::setValue(null);
+            }
+        } else {
+            parent::setValue($value);
         }
-
-        if ($value instanceof Collection) {
-            return parent::setValue($value->first()->id);
-        }
-
-        return parent::setValue($value);
     }
 
     public function isFileType()
