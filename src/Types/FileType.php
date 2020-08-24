@@ -30,12 +30,12 @@ class FileType extends Type
         } else if ($value instanceof Collection) {
             $first = $value->first();
             if ($first) {
-                parent::setValue($first);
+                parent::setValue($first->id);
             } else {
                 parent::setValue(null);
             }
         } else {
-            parent::setValue($value);
+            parent::setValue($value instanceof File ? $value->id : $value);
         }
     }
 
