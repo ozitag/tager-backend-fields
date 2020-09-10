@@ -62,4 +62,9 @@ abstract class Type implements IType
             $fileStorage->setFileScenario($fileId, $scenario);
         }
     }
+
+    public function isArray()
+    {
+        return false;
+    }
 }

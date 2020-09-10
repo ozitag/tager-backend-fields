@@ -19,4 +19,6 @@ interface IType
     public function getFileIds();
 
     public function isFileType();
+
+    public function isArray();
 }

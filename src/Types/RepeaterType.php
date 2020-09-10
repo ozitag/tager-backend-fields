@@ -17,4 +17,9 @@ class RepeaterType extends Type
     {
         return null;
     }
+
+    public function isArray()
+    {
+        return true;
+    }
 }

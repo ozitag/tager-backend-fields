@@ -11,4 +11,9 @@ class MultiSelectType extends StringType
     {
         return FieldType::MultiSelect;
     }
+
+    public function isArray()
+    {
+        return true;
+    }
 }

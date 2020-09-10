@@ -110,4 +110,9 @@ class GalleryType extends Type
 
         return $this->value;
     }
+
+    public function isArray()
+    {
+        return true;
+    }
 }
