@@ -83,4 +83,9 @@ class FileType extends Type
     {
         return $this->value ? [$this->value] : [];
     }
+
+    public function getDatabaseValue()
+    {
+        return $this->value;
+    }
 }
