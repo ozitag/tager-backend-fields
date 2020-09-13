@@ -25,6 +25,11 @@ class GalleryType extends Type
         $this->hasCaptions = (bool)$hasCaptions;
     }
 
+    public function hasCaptions()
+    {
+        return $this->hasCaptions;
+    }
+
     public function getType()
     {
         return FieldType::Gallery;
