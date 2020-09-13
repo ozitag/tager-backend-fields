@@ -123,32 +123,45 @@ class GalleryType extends Type
 
     public function setValue($value)
     {
-        if (!$value || !is_array($value)) return;
+        if (!$value) return;
 
         $result = [];
 
-        if ($this->hasCaptions) {
-            foreach ($value as $valueItem) {
-                if (is_numeric($valueItem)) {
+        if ($value instanceof Collection) {
+            foreach ($value as $item) {
+                if ($this->hasCaptions) {
                     $result[] = [
-                        'id' => $valueItem,
-                        'caption' => "",
+                        'id' => $item->id,
+                        'caption' => null
                     ];
                 } else {
-                    if (!isset($valueItem['id'])) continue;
-                    $result[] = [
-                        'id' => $valueItem['id'],
-                        'caption' => $valueItem['caption'] ?? ''
-                    ];
+                    $result[] = $item->id;
                 }
             }
-        } else {
-            foreach ($value as $valueItem) {
-                if (is_numeric($valueItem)) {
-                    $result[] = $valueItem;
-                } else {
-                    if (!isset($valueItem['id'])) continue;
-                    $result[] = $valueItem['id'];
+        } else if (is_array($value)) {
+            if ($this->hasCaptions) {
+                foreach ($value as $valueItem) {
+                    if (is_numeric($valueItem)) {
+                        $result[] = [
+                            'id' => $valueItem,
+                            'caption' => "",
+                        ];
+                    } else {
+                        if (!isset($valueItem['id'])) continue;
+                        $result[] = [
+                            'id' => $valueItem['id'],
+                            'caption' => $valueItem['caption'] ?? ''
+                        ];
+                    }
+                }
+            } else {
+                foreach ($value as $valueItem) {
+                    if (is_numeric($valueItem)) {
+                        $result[] = $valueItem;
+                    } else {
+                        if (!isset($valueItem['id'])) continue;
+                        $result[] = $valueItem['id'];
+                    }
                 }
             }
         }
