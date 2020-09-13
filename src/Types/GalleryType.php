@@ -13,9 +13,16 @@ class GalleryType extends Type
 {
     private $fileRepository;
 
+    private $hasCaptions = false;
+
     public function __construct()
     {
         $this->fileRepository = App::make(FileRepository::class);
+    }
+
+    public function setHasCaptions($hasCaptions)
+    {
+        $this->hasCaptions = (bool)$hasCaptions;
     }
 
     public function getType()
@@ -33,10 +40,10 @@ class GalleryType extends Type
      */
     private function files()
     {
-        if ($this->value instanceof Collection || is_array($this->value)) {
+        if ($this->value instanceof Collection) {
             $items = $this->value;
         } else {
-            $items = $this->value ? explode(',', $this->value) : [];
+            $items = $this->getFileIds();
         }
 
         if (empty($items)) {
@@ -48,7 +55,7 @@ class GalleryType extends Type
         foreach ($items as $item) {
             $model = $item instanceof File ? $item : $this->fileRepository->find($item);
             if ($model) {
-                $result[] = $model;
+                $result[$model->id] = $model;
             }
         }
 
@@ -75,8 +82,18 @@ class GalleryType extends Type
     {
         $result = [];
 
-        foreach ($this->files() as $file) {
-            $result[] = $file->getShortJson();
+        if ($this->hasCaptions == false) {
+            foreach ($this->files() as $file) {
+                $result[] = $file->getShortJson();
+            }
+        } else {
+            $files = $this->files();
+            foreach ($this->value as $valueItem) {
+                $result[] = [
+                    'file' => $files[$valueItem['id']] ? $files[$valueItem['id']]->getShortJson() : null,
+                    'caption' => $valueItem['caption'],
+                ];
+            }
         }
 
         return $result;
@@ -95,7 +112,48 @@ class GalleryType extends Type
 
     public function getFileIds()
     {
+        if ($this->hasCaptions) {
+            return $this->value ? array_map(function ($item) {
+                return $item['id'];
+            }, $this->value) : [];
+        }
+
         return $this->value;
+    }
+
+    public function setValue($value)
+    {
+        if (!$value || !is_array($value)) return;
+
+        $result = [];
+
+        if ($this->hasCaptions) {
+            foreach ($value as $valueItem) {
+                if (is_numeric($valueItem)) {
+                    $result[] = [
+                        'id' => $valueItem,
+                        'caption' => "",
+                    ];
+                } else {
+                    if (!isset($valueItem['id'])) continue;
+                    $result[] = [
+                        'id' => $valueItem['id'],
+                        'caption' => $valueItem['caption'] ?? ''
+                    ];
+                }
+            }
+        } else {
+            foreach ($value as $valueItem) {
+                if (is_numeric($valueItem)) {
+                    $result[] = $valueItem;
+                } else {
+                    if (!isset($valueItem['id'])) continue;
+                    $result[] = $valueItem['id'];
+                }
+            }
+        }
+
+        parent::setValue($result);
     }
 
     public function getDatabaseValue()
@@ -104,11 +162,63 @@ class GalleryType extends Type
             return null;
         }
 
-        if (is_array($this->value)) {
-            return implode(',', $this->value);
+        if (!is_array($this->value)) {
+            return null;
         }
 
-        return $this->value;
+        $result = [];
+
+        foreach ($this->value as $item) {
+            $caption = $item['caption'] ?? '';
+            $id = is_array($item) ? ($item['id'] ?? null) : $item;
+            if (!$id) continue;
+
+            if ($this->hasCaptions) {
+                $result[] = [
+                    'id' => $id,
+                    'caption' => $caption
+                ];
+            } else {
+                $result[] = $id;
+            }
+        }
+
+        return $this->hasCaptions ? json_encode($result) : implode(',', $result);
+    }
+
+    public function loadValueFromDatabase($value)
+    {
+        $result = [];
+
+        $data = json_decode($value, true);
+        if ($data) {
+            foreach ($data as $item) {
+                if (isset($item['id'])) {
+                    if ($this->hasCaptions) {
+                        $result[] = [
+                            'id' => (int)$item['id'],
+                            'caption' => $item['caption'] ?? ''
+                        ];
+                    } else {
+                        $result[] = (int)$item['id'];
+                    }
+                }
+            }
+        } else {
+            $data = explode(',', $value);
+            foreach ($data as $item) {
+                if ($this->hasCaptions) {
+                    $result[] = [
+                        'id' => (int)$item,
+                        'caption' => ''
+                    ];
+                } else {
+                    $result[] = (int)$item;
+                }
+            }
+        }
+
+        parent::setValue($result);
     }
 
     public function isArray()

@@ -3,9 +3,10 @@
 namespace OZiTAG\Tager\Backend\Fields\Fields;
 
 use OZiTAG\Tager\Backend\Fields\Base\Field;
+use OZiTAG\Tager\Backend\Fields\Base\Type;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 use OZiTAG\Tager\Backend\Fields\Enums\RepeaterView;
-use OZiTAG\Tager\Backend\Fields\FieldFactory;
+use OZiTAG\Tager\Backend\Fields\TypeFactory;
 use OZiTAG\Tager\Backend\Fields\Utils\ConfigLoader;
 
 class RepeaterField extends Field
@@ -54,5 +55,15 @@ class RepeaterField extends Field
         }
 
         return $result;
+    }
+
+    /**
+     * @return Type
+     */
+    public function getTypeInstance()
+    {
+        $type = TypeFactory::create(FieldType::Repeater);
+        $type->setFields($this->getFields());
+        return $type;
     }
 }

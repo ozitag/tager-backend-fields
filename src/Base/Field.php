@@ -47,9 +47,9 @@ abstract class Field
         ];
     }
 
-    public function getMetaParamValue($param)
+    public function getMetaParamValue($param, $default = null)
     {
-        return isset($this->meta[$param]) ? $this->meta[$param] : null;
+        return isset($this->meta[$param]) ? $this->meta[$param] : $default;
     }
 
     /**

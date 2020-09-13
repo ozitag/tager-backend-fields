@@ -14,6 +14,11 @@ abstract class Type implements IType
         $this->value = $value;
     }
 
+    public function loadValueFromDatabase($value)
+    {
+        $this->setValue($value);
+    }
+
     public function getValue()
     {
         return $this->value;
