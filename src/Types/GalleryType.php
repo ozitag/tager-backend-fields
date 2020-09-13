@@ -108,8 +108,22 @@ class GalleryType extends Type
     {
         $result = [];
 
-        foreach ($this->files() as $file) {
-            $result[] = $file->getFullJson();
+        $files = $this->files();
+
+        if (!$this->hasCaptions()) {
+            foreach ($files as $file) {
+                $result[] = $file->getFullJson();
+            }
+        } else {
+            foreach ($this->value as $valueItem) {
+                $file = $files[$valueItem['id']] ?? null;
+                if (!$file) continue;
+
+                $result[] = [
+                    'file' => $file->getFullJson(),
+                    'caption' => $valueItem['caption']
+                ];
+            }
         }
 
         return $result;
