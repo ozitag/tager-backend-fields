@@ -2,7 +2,7 @@
 
 namespace OZiTAG\Tager\Backend\Fields;
 
-use OZiTAG\Tager\Backend\Fields\Contracts\IField;
+use OZiTAG\Tager\Backend\Fields\Contracts\IType;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 use OZiTAG\Tager\Backend\Fields\Exceptions\InvalidTypeException;
 use OZiTAG\Tager\Backend\Fields\Types\ButtonType;
@@ -28,7 +28,7 @@ class TypeFactory
 {
     /**
      * @param $fieldType
-     * @return IField
+     * @return IType
      */
     public static function create($fieldType)
     {

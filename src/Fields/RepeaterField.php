@@ -17,10 +17,17 @@ class RepeaterField extends Field
     {
         parent::__construct($label, FieldType::Repeater);
 
-        $this->setMetaParam('view', $view);
+        $this->setViewMode($view);
 
         if (!empty($fields)) {
             $this->setFields($fields);
+        }
+    }
+
+    public function setViewMode($viewMode)
+    {
+        if (RepeaterView::hasValue($viewMode)) {
+            $this->setMetaParam('view', $viewMode);
         }
     }
 
