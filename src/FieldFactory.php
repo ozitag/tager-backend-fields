@@ -54,7 +54,7 @@ class FieldFactory
             case FieldType::TrueFalse:
                 return new TrueFalseField($label);
             case FieldType::Select:
-                return new SelectField($label);
+                return new SelectField($label, $meta['options'] ?? null);
             case FieldType::MultiSelect:
                 return new MultiSelectField($label);
             case FieldType::Image:

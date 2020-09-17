@@ -3,6 +3,7 @@
 namespace OZiTAG\Tager\Backend\Fields\Fields;
 
 use OZiTAG\Tager\Backend\Fields\Base\Field;
+use OZiTAG\Tager\Backend\Fields\Contracts\ISelectOptionsGenerator;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 use OZiTAG\Tager\Backend\Utils\Helpers\ArrayHelper;
 
@@ -11,7 +12,17 @@ class SelectField extends Field
     public function __construct($label, $options = [])
     {
         if (ArrayHelper::isAssoc($options) === false) {
-            throw new \Exception('Options should be as key:value array');
+
+            if (is_string($options)) {
+                $class = new $options;
+                if ($class instanceof ISelectOptionsGenerator == false) {
+                    throw new \Exception('Options should be as key:value array or className that implements ISelectOptionsGenerator contract');
+                }
+
+                $options = $class->generate();
+            } else {
+                throw new \Exception('Options should be as key:value array or className that implements ISelectOptionsGenerator contract');
+            }
         }
 
         foreach ($options as $param => $value) {
