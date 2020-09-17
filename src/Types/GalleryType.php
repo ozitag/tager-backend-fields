@@ -131,6 +131,10 @@ class GalleryType extends Type
 
     public function getFileIds()
     {
+        if($this->value == null){
+            return [];
+        }
+
         if ($this->hasCaptions) {
             return $this->value ? array_map(function ($item) {
                 return $item['id'];
