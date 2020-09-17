@@ -10,12 +10,19 @@ abstract class Field
 
     private $label;
 
+    private $name = null;
+
     protected $meta = [];
 
     public function __construct($label, $type)
     {
         $this->label = $label;
         $this->type = $type;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     protected function setMetaParam($param, $value)
@@ -38,9 +45,15 @@ abstract class Field
         return $this->meta;
     }
 
+    public function getName()
+    {
+        return $this->name;
+    }
+
     public function getJson()
     {
         return [
+            'name' => $this->getName(),
             'type' => $this->getType(),
             'label' => $this->getLabel(),
             'meta' => empty($this->getMeta()) ? new \stdClass() : $this->getMeta()
