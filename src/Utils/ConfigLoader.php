@@ -14,12 +14,15 @@ class ConfigLoader
 
         foreach ($fieldsConfig as $param => $field) {
             if ($field instanceof Field) {
+                $field->setName($param);
                 $result[$param] = $field;
             } else if (is_array($field)) {
                 if (isset($field['type']) && isset($field['label'])) {
 
                     try {
                         $fieldModel = FieldFactory::create($field['type'], $field['label'], $field['meta'] ?? []);
+                        $fieldModel->setName($param);
+
                         if ($fieldModel instanceof RepeaterField) {
                             $fieldModel->setFields($field['fields']);
                         }
