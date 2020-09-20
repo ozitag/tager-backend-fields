@@ -2,6 +2,7 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Fields;
 
+use Illuminate\Support\Facades\App;
 use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\Contracts\ISelectOptionsGenerator;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
@@ -14,7 +15,7 @@ class SelectField extends Field
         if (ArrayHelper::isAssoc($options) === false) {
 
             if (is_string($options)) {
-                $class = new $options;
+                $class = App::make($options);
                 if ($class instanceof ISelectOptionsGenerator == false) {
                     throw new \Exception('Options should be as key:value array or className that implements ISelectOptionsGenerator contract');
                 }
