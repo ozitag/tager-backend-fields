@@ -10,4 +10,28 @@ class SelectType extends StringType
     {
         return FieldType::Select;
     }
+
+    public function getValue()
+    {
+        if (empty($this->value)) {
+            return null;
+        }
+
+        return $this->value;
+    }
+
+    public function getPublicValue()
+    {
+        return $this->getValue();
+    }
+
+    public function getAdminJson()
+    {
+        return $this->getValue();
+    }
+
+    public function getAdminFullJson()
+    {
+        return $this->getValue();
+    }
 }
