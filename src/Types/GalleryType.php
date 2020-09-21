@@ -89,7 +89,10 @@ class GalleryType extends Type
 
         if ($this->hasCaptions == false) {
             foreach ($this->files() as $file) {
-                $result[] = $file->getShortJson();
+                $result[] = [
+                    'file' => $file->getShortJson(),
+                    'caption' => null
+                ];
             }
         } else {
             $files = $this->files();
@@ -131,7 +134,7 @@ class GalleryType extends Type
 
     public function getFileIds()
     {
-        if($this->value == null){
+        if ($this->value == null) {
             return [];
         }
 
