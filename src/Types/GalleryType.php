@@ -98,7 +98,7 @@ class GalleryType extends Type
             $files = $this->files();
             foreach ($this->value as $valueItem) {
                 $result[] = [
-                    'file' => $files[$valueItem['id']] ? $files[$valueItem['id']]->getShortJson() : null,
+                    'file' => isset($files[$valueItem['id']]) && $files[$valueItem['id']] ? $files[$valueItem['id']]->getShortJson() : null,
                     'caption' => $valueItem['caption'],
                 ];
             }
@@ -229,30 +229,32 @@ class GalleryType extends Type
     {
         $result = [];
 
-        $data = json_decode($value, true);
-        if ($data) {
-            foreach ($data as $item) {
-                if (isset($item['id'])) {
-                    if ($this->hasCaptions) {
-                        $result[] = [
-                            'id' => (int)$item['id'],
-                            'caption' => $item['caption'] ?? ''
-                        ];
-                    } else {
-                        $result[] = (int)$item['id'];
+        if ($value) {
+            $data = json_decode($value, true);
+            if ($data !== null) {
+                foreach ($data as $item) {
+                    if (isset($item['id'])) {
+                        if ($this->hasCaptions) {
+                            $result[] = [
+                                'id' => (int)$item['id'],
+                                'caption' => $item['caption'] ?? ''
+                            ];
+                        } else {
+                            $result[] = (int)$item['id'];
+                        }
                     }
                 }
-            }
-        } else {
-            $data = explode(',', $value);
-            foreach ($data as $item) {
-                if ($this->hasCaptions) {
-                    $result[] = [
-                        'id' => (int)$item,
-                        'caption' => ''
-                    ];
-                } else {
-                    $result[] = (int)$item;
+            } else if (is_string($data)) {
+                $data = explode(',', $value);
+                foreach ($data as $item) {
+                    if ($this->hasCaptions) {
+                        $result[] = [
+                            'id' => (int)$item,
+                            'caption' => ''
+                        ];
+                    } else {
+                        $result[] = (int)$item;
+                    }
                 }
             }
         }
