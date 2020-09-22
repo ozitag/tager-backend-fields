@@ -96,11 +96,14 @@ class GalleryType extends Type
             }
         } else {
             $files = $this->files();
-            foreach ($this->value as $valueItem) {
-                $result[] = [
-                    'file' => isset($files[$valueItem['id']]) && $files[$valueItem['id']] ? $files[$valueItem['id']]->getShortJson() : null,
-                    'caption' => $valueItem['caption'],
-                ];
+
+            if (is_array($this->value)) {
+                foreach ($this->value as $valueItem) {
+                    $result[] = [
+                        'file' => isset($files[$valueItem['id']]) && $files[$valueItem['id']] ? $files[$valueItem['id']]->getShortJson() : null,
+                        'caption' => $valueItem['caption'],
+                    ];
+                }
             }
         }
 
@@ -118,14 +121,16 @@ class GalleryType extends Type
                 $result[] = $file->getFullJson();
             }
         } else {
-            foreach ($this->value as $valueItem) {
-                $file = $files[$valueItem['id']] ?? null;
-                if (!$file) continue;
+            if (is_array($this->value)) {
+                foreach ($this->value as $valueItem) {
+                    $file = $files[$valueItem['id']] ?? null;
+                    if (!$file) continue;
 
-                $result[] = [
-                    'file' => $file->getFullJson(),
-                    'caption' => $valueItem['caption']
-                ];
+                    $result[] = [
+                        'file' => $file->getFullJson(),
+                        'caption' => $valueItem['caption']
+                    ];
+                }
             }
         }
 
