@@ -236,6 +236,7 @@ class GalleryType extends Type
 
         if ($value) {
             $data = json_decode($value, true);
+
             if ($data !== null) {
                 foreach ($data as $item) {
                     if (isset($item['id'])) {
@@ -249,7 +250,7 @@ class GalleryType extends Type
                         }
                     }
                 }
-            } else if (is_string($data)) {
+            } else if (is_string($value)) {
                 $data = explode(',', $value);
                 foreach ($data as $item) {
                     if ($this->hasCaptions) {
