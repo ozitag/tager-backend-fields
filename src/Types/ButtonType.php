@@ -16,51 +16,55 @@ class ButtonType extends Type
         return FieldType::Button;
     }
 
-    public function setValue($value)
-    {
-        if (is_array($value)) {
-            if (isset($value['label']) && isset($value['action'])) {
-                $this->label = $value['label'];
-                $this->action = $value['action'];
-            } else if (count($value) == 2) {
-                [$this->label, $this->action] = $value;
-            }
-        } else if (is_string($value)) {
-            $value = json_decode($value, true);
-            $this->setValue($value);
-        }
-    }
-
-    public function getValue()
-    {
-        if (!$this->label && !$this->action) {
-            return null;
-        }
-
-        return [
-            'label' => $this->label,
-            'action' => $this->action
-        ];
-    }
-    
     public function getDatabaseValue()
     {
-        if (!$this->label && !$this->action) {
+        if (is_array($this->value) && isset($this->value['label']) && isset($this->value['link'])) {
+            return json_encode([
+                'label' => $this->value['label'],
+                'link' => $this->value['link'],
+                'isNewTab' => isset($this->value['isNewTab']) ? (boolean)$this->value['isNewTab'] : false
+            ]);
+        } else {
             return null;
         }
+    }
 
-        return json_encode([
-            'label' => $this->label,
-            'action' => $this->action
+    public function loadValueFromDatabase($value)
+    {
+        if (!$value) {
+            $this->setValue(null);
+            return;
+        }
+
+        $value = json_decode($value, true);
+        if ($value === null) {
+            $this->setValue(null);
+            return;
+        }
+
+        $this->setValue([
+            'label' => $value['label'] ?? '',
+            'link' => $value['link'] ?? '',
+            'isNewTab' => isset($value['isNewTab']) ? boolval($value['isNewTab']) : false
         ]);
+    }
+
+    public function getPublicValue()
+    {
+        return $this->getAdminFullJson();
     }
 
     public function getAdminJson()
     {
-        if (!$this->label && !$this->action) {
+        return $this->getAdminFullJson();
+    }
+
+    public function getAdminFullJson()
+    {
+        if (!$this->value) {
             return null;
         }
 
-        return $this->label . ' (' . $this->action ? $this->action : 'No action' . ')';
+        return $this->value;
     }
 }
