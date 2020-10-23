@@ -53,7 +53,7 @@ class RepeaterType extends Type
     {
         $value = $this->getValue();
         if (!$value) {
-            return $value;
+            return [];
         }
 
         $fields = $this->fields;
