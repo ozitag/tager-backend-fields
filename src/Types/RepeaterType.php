@@ -52,6 +52,10 @@ class RepeaterType extends Type
     public function getPublicValue()
     {
         $value = $this->getValue();
+        if (!$value) {
+            return $value;
+        }
+
         $fields = $this->fields;
 
         $result = [];
