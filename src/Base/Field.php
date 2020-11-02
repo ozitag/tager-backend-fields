@@ -23,11 +23,13 @@ abstract class Field
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
     }
 
     protected function setMetaParam($param, $value)
     {
         $this->meta[$param] = $value;
+        return $this;
     }
 
     public function getType()
