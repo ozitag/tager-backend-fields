@@ -49,6 +49,44 @@ class RepeaterType extends Type
         }
     }
 
+    public function getAdminFullJson()
+    {
+        $value = $this->getValue();
+        if (!$value) {
+            return [];
+        }
+
+        $fields = $this->fields;
+        $result = [];
+
+        foreach ($value as $valueRow) {
+            $resultRow = [];
+
+            foreach ($fields as $field) {
+
+                $fieldValue = null;
+                foreach ($valueRow as $valueItem) {
+                    if ($valueItem['name'] == $field->getName()) {
+                        $fieldValue = $valueItem['value'];
+                        break;
+                    }
+                }
+
+                $type = $field->getTypeInstance();
+                if ($field instanceof RepeaterField && $type instanceof RepeaterType) {
+                    $type->setFields($ficeld->getFields());
+                }
+                $type->setValue($fieldValue);
+
+                $resultRow[] = ['name' => $field->getName(), 'value' => $type->getAdminFullJson()];
+            }
+
+            $result[] = $resultRow;
+        }
+
+        return $result;
+    }
+
     public function getPublicValue()
     {
         $value = $this->getValue();
