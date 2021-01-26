@@ -8,6 +8,7 @@ use Ozerich\FileStorage\Models\File;
 use Ozerich\FileStorage\Repositories\FileRepository;
 use OZiTAG\Tager\Backend\Fields\Base\Type;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
+use OZiTAG\Tager\Backend\Files\Enums\TagerFileThumbnail;
 
 class FileType extends Type
 {
@@ -76,7 +77,7 @@ class FileType extends Type
             return null;
         }
 
-        return $file->getFullJson();
+        return $file->getFullJson(null, false, true, [TagerFileThumbnail::AdminList, TagerFileThumbnail::AdminView]);
     }
 
     public function getFileIds()
