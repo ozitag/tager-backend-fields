@@ -25,4 +25,5 @@ class FieldType extends Enum
     const Template = 'TEMPLATE';
 
     const Repeater = 'REPEATER';
+    const GROUP = 'GROUP';
 }

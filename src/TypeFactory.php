@@ -11,6 +11,7 @@ use OZiTAG\Tager\Backend\Fields\Types\DateTimeType;
 use OZiTAG\Tager\Backend\Fields\Types\DateType;
 use OZiTAG\Tager\Backend\Fields\Types\FileType;
 use OZiTAG\Tager\Backend\Fields\Types\GalleryType;
+use OZiTAG\Tager\Backend\Fields\Types\GroupType;
 use OZiTAG\Tager\Backend\Fields\Types\HtmlType;
 use OZiTAG\Tager\Backend\Fields\Types\ImageType;
 use OZiTAG\Tager\Backend\Fields\Types\MapType;
@@ -69,6 +70,8 @@ class TypeFactory
                 return new TemplateType();
             case FieldType::Repeater:
                 return new RepeaterType();
+            case FieldType::GROUP:
+                return new GroupType();
             default:
                 throw new InvalidTypeException('Type "' . $fieldType . " can not be recognized");
         }

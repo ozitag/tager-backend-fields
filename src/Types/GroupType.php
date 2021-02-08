@@ -9,7 +9,7 @@ use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 use OZiTAG\Tager\Backend\Fields\Fields\RepeaterField;
 use OZiTAG\Tager\Backend\Fields\TypeFactory;
 
-class RepeaterType extends Type
+class GroupType extends Type
 {
     /** @var Field[] */
     private $fields;
