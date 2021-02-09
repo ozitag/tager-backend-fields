@@ -10,6 +10,8 @@ class GroupField extends Field
 {
     protected array $fields;
 
+    protected ?int $index = null;
+
     public function __construct(string $label, array $fields)
     {
         parent::__construct($label, FieldType::GROUP);
@@ -22,10 +24,15 @@ class GroupField extends Field
         return $this->fields;
     }
 
+    public function setGroupIndex(int $index)
+    {
+        $this->index = $index;
+    }
+
     public function getJson()
     {
         $result = [
-            'name' => 'group',
+            'name' => 'group' . ($this->index ?? ''),
             'type' => $this->getType(),
             'label' => $this->getLabel(),
             'meta' => new \stdClass(),
