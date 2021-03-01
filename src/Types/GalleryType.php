@@ -177,18 +177,40 @@ class GalleryType extends Type
                             'id' => $valueItem,
                             'caption' => "",
                         ];
+                    } else if (is_string($valueItem)) {
+                        $model = $this->fileRepository->find($valueItem);
+                        if ($model) {
+                            $result[] = [
+                                'id' => $model->id,
+                                'caption' => "",
+                            ];
+                        }
                     } else {
                         if (!isset($valueItem['id'])) continue;
-                        $result[] = [
-                            'id' => $valueItem['id'],
-                            'caption' => $valueItem['caption'] ?? ''
-                        ];
+
+                        if (is_string($valueItem['id'])) {
+                            $model = $this->fileRepository->find($valueItem);
+                            $valueItem['id'] = $model ? $model->id : null;
+                        }
+
+                        if ($valueItem['id']) {
+                            $result[] = [
+                                'id' => $valueItem['id'],
+                                'caption' => $valueItem['caption'] ?? ''
+                            ];
+                        }
                     }
                 }
             } else {
                 foreach ($value as $valueItem) {
                     if (is_numeric($valueItem)) {
                         $result[] = $valueItem;
+                    } else if (is_string($valueItem)) {
+                        $model = $this->fileRepository->find($valueItem);
+                        $valueItem = $model ? $model->id : null;
+                        if ($valueItem) {
+                            $result[] = $valueItem;
+                        }
                     } else {
                         if (!isset($valueItem['id'])) continue;
                         $result[] = $valueItem['id'];

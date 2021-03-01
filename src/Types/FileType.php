@@ -27,7 +27,14 @@ class FileType extends Type
     public function setValue($value)
     {
         if (is_array($value)) {
-            parent::setValue(count($value) > 1 ? $value[0] : null);
+            $imageId = count($value) > 1 ? $value[0] : null;
+
+            if(is_string($imageId)){
+                $model = $this->fileRepository->find($value);
+                $imageId = $model ? $model->id : null;
+            }
+
+            parent::setValue($imageId);
         } else if ($value instanceof Collection) {
             $first = $value->first();
             if ($first) {
@@ -35,8 +42,11 @@ class FileType extends Type
             } else {
                 parent::setValue(null);
             }
-        } else {
-            parent::setValue($value instanceof File ? $value->id : $value);
+        } else if ($value instanceof File) {
+            parent::setValue($value->id);
+        } else if (is_string($value)) {
+            $model = $this->fileRepository->find($value);
+            parent::setValue($model ? $model->id : null);
         }
     }
 
