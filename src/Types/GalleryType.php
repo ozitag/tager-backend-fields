@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 use Ozerich\FileStorage\Models\File;
 use Ozerich\FileStorage\Repositories\FileRepository;
+use Ozerich\FileStorage\Storage;
 use OZiTAG\Tager\Backend\Fields\Base\Type;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
@@ -238,6 +239,8 @@ class GalleryType extends Type
             $caption = $item['caption'] ?? '';
             $id = is_array($item) ? ($item['id'] ?? null) : $item;
             if (!$id) continue;
+
+            $id = Storage::fromUUIDtoId($id);
 
             if ($this->hasCaptions) {
                 $result[] = [
