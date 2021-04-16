@@ -7,8 +7,10 @@ use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
 class UrlField extends Field
 {
-    public function __construct($label)
+    public function __construct(string $label, ?string $placeholder = null)
     {
         parent::__construct($label, FieldType::Url);
+
+        $this->setPlaceholder($placeholder);
     }
 }

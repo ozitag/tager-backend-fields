@@ -7,7 +7,7 @@ use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
 class TrueFalseField extends Field
 {
-    public function __construct($label)
+    public function __construct(string $label)
     {
         parent::__construct($label, FieldType::TrueFalse);
     }

@@ -10,6 +10,8 @@ abstract class Field
 
     private $label;
 
+    protected ?string $placeholder = null;
+
     private $name = null;
 
     protected $meta = [];
@@ -18,6 +20,11 @@ abstract class Field
     {
         $this->label = $label;
         $this->type = $type;
+    }
+
+    protected function setPlaceholder(?string $placeholder)
+    {
+        $this->placeholder = $placeholder;
     }
 
     public function setName($name)
@@ -55,9 +62,10 @@ abstract class Field
     public function getJson()
     {
         return [
-            'name' => $this->getName(),
-            'type' => $this->getType(),
-            'label' => $this->getLabel(),
+            'name' => $this->name,
+            'type' => $this->type,
+            'label' => $this->label,
+            'placeholder' => $this->placeholder,
             'meta' => empty($this->getMeta()) ? new \stdClass() : $this->getMeta()
         ];
     }
