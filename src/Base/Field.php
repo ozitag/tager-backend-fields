@@ -10,6 +10,8 @@ abstract class Field
 
     private $label;
 
+    protected $publicValueFormatter;
+
     protected ?string $placeholder = null;
 
     private $name = null;
@@ -80,6 +82,19 @@ abstract class Field
      */
     public function getTypeInstance()
     {
-        return TypeFactory::create($this->type);
+        $type = TypeFactory::create($this->type);
+
+        if ($this->publicValueFormatter) {
+            $type->setPublicValueFormatter($this->publicValueFormatter);
+        }
+
+        return $type;
+    }
+
+    public function setPublicValueFormatter($formatter)
+    {
+        $this->publicValueFormatter = $formatter;
+
+        return $this;
     }
 }

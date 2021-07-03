@@ -31,7 +31,7 @@ class TypeFactory
      * @param $fieldType
      * @return IType
      */
-    public static function create($fieldType)
+    public static function create($fieldType, $meta = [])
     {
         switch ($fieldType) {
             case FieldType::String:

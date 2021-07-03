@@ -9,6 +9,8 @@ abstract class Type implements IType
 {
     protected $value = null;
 
+    protected $publicValueFormatter = null;
+
     public function setValue($value)
     {
         $this->value = $value;
@@ -66,6 +68,11 @@ abstract class Type implements IType
         foreach ($this->getFileIds() as $fileId) {
             $fileStorage->setFileScenario($fileId, $scenario);
         }
+    }
+
+    public function setPublicValueFormatter($formatter)
+    {
+        $this->publicValueFormatter = $formatter;
     }
 
     public function isArray()
