@@ -4,14 +4,25 @@ namespace OZiTAG\Tager\Backend\Fields\Types;
 
 use Doctrine\DBAL\Types\TextType;
 use Illuminate\Support\Facades\App;
+use Ozerich\FileStorage\Storage;
+use OZiTAG\Tager\Backend\Fields\Base\Type;
 use OZiTAG\Tager\Backend\Fields\Contracts\IPublicValueFormatter;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
-class MultiSelectType extends StringType
+class MultiSelectType extends Type
 {
     public function getType()
     {
         return FieldType::MultiSelect;
+    }
+
+    public function getValue()
+    {
+        if (empty($this->value)) {
+            return [];
+        }
+
+        return explode(',', $this->value);
     }
 
     public function getPublicValue()
@@ -30,6 +41,19 @@ class MultiSelectType extends StringType
         }
 
         return $this->getValue();
+    }
+
+    public function getDatabaseValue()
+    {
+        if (!$this->value) {
+            return null;
+        }
+
+        if (!is_array($this->value)) {
+            return null;
+        }
+
+        return implode(',', $this->value);
     }
 
     public function isArray()
