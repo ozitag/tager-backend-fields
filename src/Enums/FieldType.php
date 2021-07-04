@@ -16,7 +16,7 @@ class FieldType extends Enum
     const DateTime = 'DATETIME';
     const TrueFalse = 'TRUE_FALSE';
     const Select = 'SELECT';
-    const MultiSelect = 'MULTISELECT';
+    const MultiSelect = 'MULTI_SELECT';
     const Image = 'IMAGE';
     const Gallery = 'GALLERY';
     const File = 'FILE';
