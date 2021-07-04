@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\App;
 use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\Contracts\ISelectOptionsGenerator;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
+use OZiTAG\Tager\Backend\Fields\TypeFactory;
+use OZiTAG\Tager\Backend\Fields\Types\MultiSelectType;
 use OZiTAG\Tager\Backend\Utils\Helpers\ArrayHelper;
 
 class MultiSelectField extends Field
@@ -43,5 +45,18 @@ class MultiSelectField extends Field
         }
 
         $this->setMetaParam('options', $optionsFiltered);
+    }
+
+    /**
+     * @return Type
+     */
+    public function getTypeInstance()
+    {
+        /** @var MultiSelectType $type */
+        $type = TypeFactory::create(FieldType::MultiSelect);
+
+        $type->setOptions($this->getMetaParamValue('options', []));
+
+        return $type;
     }
 }

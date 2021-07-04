@@ -11,6 +11,13 @@ use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
 class MultiSelectType extends Type
 {
+    protected array $options = [];
+
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
+    }
+
     public function getType()
     {
         return FieldType::MultiSelect;
@@ -54,6 +61,25 @@ class MultiSelectType extends Type
         }
 
         return implode(',', $this->value);
+    }
+
+    public function getAdminFullJson()
+    {
+        $value = $this->getValue();
+
+        $result = [];
+
+        foreach ($value as $value) {
+            foreach ($this->options as $option) {
+                if ($option['value'] == $value) {
+                    $result[] = $option;
+                }
+            }
+        }
+
+        return $result;
+
+        return parent::getAdminFullJson();
     }
 
     public function isArray()
