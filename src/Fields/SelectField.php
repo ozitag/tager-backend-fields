@@ -46,4 +46,11 @@ class SelectField extends Field
 
         return $this;
     }
+
+    public function getTypeInstance()
+    {
+        $type = parent::getTypeInstance();
+        $type->setOptions($this->getMetaParamValue('options', []));
+        return $type;
+    }
 }

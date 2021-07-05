@@ -8,6 +8,13 @@ use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
 class SelectType extends StringType
 {
+    protected array $options = [];
+
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
+    }
+    
     public function getType()
     {
         return FieldType::Select;

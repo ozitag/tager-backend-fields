@@ -69,10 +69,10 @@ class MultiSelectType extends Type
 
         $result = [];
 
-        foreach ($value as $valueItem) {
+        foreach ($value as $value) {
             foreach ($this->options as $option) {
-                if ($option['value'] == $valueItem) {
-                    $result[] = $option['value'];
+                if ($option['value'] == $value) {
+                    $result[] = $option;
                 }
             }
         }

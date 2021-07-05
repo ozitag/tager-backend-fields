@@ -47,16 +47,10 @@ class MultiSelectField extends Field
         $this->setMetaParam('options', $optionsFiltered);
     }
 
-    /**
-     * @return Type
-     */
     public function getTypeInstance()
     {
-        /** @var MultiSelectType $type */
-        $type = TypeFactory::create(FieldType::MultiSelect);
-
+        $type = parent::getTypeInstance();
         $type->setOptions($this->getMetaParamValue('options', []));
-
         return $type;
     }
 }
