@@ -69,17 +69,15 @@ class MultiSelectType extends Type
 
         $result = [];
 
-        foreach ($value as $value) {
+        foreach ($value as $valueItem) {
             foreach ($this->options as $option) {
-                if ($option['value'] == $value) {
-                    $result[] = $option;
+                if ($option['value'] == $valueItem) {
+                    $result[] = $option['value'];
                 }
             }
         }
 
         return $result;
-
-        return parent::getAdminFullJson();
     }
 
     public function isArray()
