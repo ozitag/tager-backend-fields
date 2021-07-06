@@ -12,6 +12,8 @@ abstract class Field
 
     protected $publicValueFormatter;
 
+    protected ?int $maximumItemsCount = null;
+
     protected ?string $placeholder = null;
 
     private $name = null;
@@ -94,6 +96,13 @@ abstract class Field
     public function setPublicValueFormatter($formatter)
     {
         $this->publicValueFormatter = $formatter;
+
+        return $this;
+    }
+
+    public function setMaximumItemsCount($maximumItemsCount = null)
+    {
+        $this->meta['maximumItemsCount'] = $maximumItemsCount;
 
         return $this;
     }
