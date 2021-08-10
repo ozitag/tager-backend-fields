@@ -10,7 +10,7 @@ use OZiTAG\Tager\Backend\Utils\Helpers\ArrayHelper;
 
 class SelectField extends Field
 {
-    public function __construct($label, $options = [], $publicValueFormatter = null)
+    public function __construct($label, $options = [])
     {
         if (ArrayHelper::isAssoc($options) === false) {
 
@@ -37,7 +37,7 @@ class SelectField extends Field
         $optionsFiltered = [];
         foreach ($options as $param => $value) {
             $optionsFiltered[] = [
-                'value' => $param,
+                'value' => (string)$param,
                 'label' => $value
             ];
         }

@@ -39,7 +39,7 @@ class MultiSelectField extends Field
         $optionsFiltered = [];
         foreach ($options as $param => $value) {
             $optionsFiltered[] = [
-                'value' => $param,
+                'value' => (string)$param,
                 'label' => $value
             ];
         }
