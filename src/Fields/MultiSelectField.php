@@ -12,22 +12,16 @@ use OZiTAG\Tager\Backend\Utils\Helpers\ArrayHelper;
 
 class MultiSelectField extends Field
 {
-    public function __construct(string $label, $options = [])
+    public function __construct(string $label, ?array $options = [], ?string $optionsGenerator = null, ?array $optionsGeneratorParams = [])
     {
         parent::__construct($label, FieldType::MultiSelect);
 
-        if (ArrayHelper::isAssoc($options) === false) {
-
-            if (is_string($options)) {
-                $class = App::make($options);
-                if ($class instanceof ISelectOptionsGenerator == false) {
-                    throw new \Exception('Options should be as key:value array or className that implements ISelectOptionsGenerator contract');
-                }
-
-                $options = $class->generate();
-            } else {
+        if (!empty($optionsGenerator)) {
+            $class = App::make($optionsGenerator, $optionsGeneratorParams);
+            if ($class instanceof ISelectOptionsGenerator == false) {
                 throw new \Exception('Options should be as key:value array or className that implements ISelectOptionsGenerator contract');
             }
+            $options = $class->generate();
         }
 
         foreach ($options as $param => $value) {

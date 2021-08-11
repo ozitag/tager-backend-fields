@@ -10,20 +10,16 @@ use OZiTAG\Tager\Backend\Utils\Helpers\ArrayHelper;
 
 class SelectField extends Field
 {
-    public function __construct($label, $options = [])
+    public function __construct($label, $options = [], $optionsGenerator = null, $optionsGeneratorParams = [])
     {
-        if (ArrayHelper::isAssoc($options) === false) {
+        parent::__construct($label, FieldType::Select);
 
-            if (is_string($options)) {
-                $class = App::make($options);
-                if ($class instanceof ISelectOptionsGenerator == false) {
-                    throw new \Exception('Options should be as key:value array or className that implements ISelectOptionsGenerator contract');
-                }
-
-                $options = $class->generate();
-            } else {
+        if (!empty($optionsGenerator)) {
+            $class = App::make($optionsGenerator, $optionsGeneratorParams);
+            if ($class instanceof ISelectOptionsGenerator == false) {
                 throw new \Exception('Options should be as key:value array or className that implements ISelectOptionsGenerator contract');
             }
+            $options = $class->generate();
         }
 
         foreach ($options as $param => $value) {
@@ -31,8 +27,6 @@ class SelectField extends Field
                 throw new \Exception('Value for option "' . $param . '" should be the string');
             }
         }
-
-        parent::__construct($label, FieldType::Select);
 
         $optionsFiltered = [];
         foreach ($options as $param => $value) {
