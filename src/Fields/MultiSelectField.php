@@ -12,36 +12,32 @@ use OZiTAG\Tager\Backend\Utils\Helpers\ArrayHelper;
 
 class MultiSelectField extends Field
 {
-    public function __construct(string $label, $options = [])
+    public function __construct(string $label, ?array $options = [], ?string $optionsGenerator = null, ?array $optionsGeneratorParams = [])
     {
         parent::__construct($label, FieldType::MultiSelect);
 
-        if (ArrayHelper::isAssoc($options) === false) {
-
-            if (is_string($options)) {
-                $class = App::make($options);
-                if ($class instanceof ISelectOptionsGenerator == false) {
-                    throw new \Exception('Options should be as key:value array or className that implements ISelectOptionsGenerator contract');
-                }
-
-                $options = $class->generate();
-            } else {
+        if (!empty($optionsGenerator)) {
+            $class = App::make($optionsGenerator, $optionsGeneratorParams);
+            if ($class instanceof ISelectOptionsGenerator == false) {
                 throw new \Exception('Options should be as key:value array or className that implements ISelectOptionsGenerator contract');
             }
-        }
-
-        foreach ($options as $param => $value) {
-            if (!is_string($value)) {
-                throw new \Exception('Value for option "' . $param . '" should be the string');
-            }
+            $options = $class->generate();
         }
 
         $optionsFiltered = [];
-        foreach ($options as $param => $value) {
-            $optionsFiltered[] = [
-                'value' => (string)$param,
-                'label' => $value
-            ];
+        if(is_array($options) && !empty($options)) {
+            foreach ($options as $param => $value) {
+                if (!is_string($value)) {
+                    throw new \Exception('Value for option "' . $param . '" should be the string');
+                }
+            }
+
+            foreach ($options as $param => $value) {
+                $optionsFiltered[] = [
+                    'value' => (string)$param,
+                    'label' => $value
+                ];
+            }
         }
 
         $this->setMetaParam('options', $optionsFiltered);
