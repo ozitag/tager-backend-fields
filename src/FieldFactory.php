@@ -54,9 +54,17 @@ class FieldFactory
             case FieldType::TrueFalse:
                 return new TrueFalseField($label);
             case FieldType::Select:
-                return new SelectField($label, $meta['options'] ?? null, $meta['optionsGenerator'] ?? null, $meta['optionsGeneratorParams'] ?? []);
+                $field = new SelectField($label, $meta['options'] ?? null, $meta['optionsGenerator'] ?? null, $meta['optionsGeneratorParams'] ?? []);
+                if (isset($meta['publicValueFormatter'])) {
+                    $field->setPublicValueFormatter($meta['publicValueFormatter']);
+                }
+                return $field;
             case FieldType::MultiSelect:
-                return new MultiSelectField($label, $meta['options'] ?? null, $meta['optionsGenerator'] ?? null, $meta['optionsGeneratorParams'] ?? []);
+                $field = new MultiSelectField($label, $meta['options'] ?? null, $meta['optionsGenerator'] ?? null, $meta['optionsGeneratorParams'] ?? []);
+                if (isset($meta['publicValueFormatter'])) {
+                    $field->setPublicValueFormatter($meta['publicValueFormatter']);
+                }
+                return $field;
             case FieldType::Image:
                 return new ImageField($label, $meta['scenario'] ?? null);
             case FieldType::Gallery:
