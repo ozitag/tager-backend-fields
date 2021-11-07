@@ -4,6 +4,7 @@ namespace OZiTAG\Tager\Backend\Fields;
 
 use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
+use OZiTAG\Tager\Backend\Fields\Enums\RepeaterView;
 use OZiTAG\Tager\Backend\Fields\Exceptions\InvalidTypeException;
 use OZiTAG\Tager\Backend\Fields\Fields\ButtonField;
 use OZiTAG\Tager\Backend\Fields\Fields\ColorField;
@@ -78,7 +79,7 @@ class FieldFactory
             case FieldType::Template:
                 return new TemplateField($label);
             case FieldType::Repeater:
-                return new RepeaterField($label);
+                return new RepeaterField($label, $meta['fields'] ?? [], $meta['view'] ?? RepeaterView::Table);
             default:
                 throw new InvalidTypeException('Type "' . $type . " can not be recognized");
         }
