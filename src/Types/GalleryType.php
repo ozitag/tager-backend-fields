@@ -9,7 +9,6 @@ use Ozerich\FileStorage\Repositories\FileRepository;
 use Ozerich\FileStorage\Storage;
 use OZiTAG\Tager\Backend\Fields\Base\Type;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
-use OZiTAG\Tager\Backend\Files\Enums\TagerFileThumbnail;
 
 class GalleryType extends Type
 {
@@ -120,7 +119,9 @@ class GalleryType extends Type
 
         if (!$this->hasCaptions()) {
             foreach ($files as $file) {
-                $result[] = $file->getFullJson(null, false, true, [TagerFileThumbnail::AdminList, TagerFileThumbnail::AdminView]);
+                $result[] = $file->getFullJson(null, false, true, [
+                    'tager-admin-list', 'tager-admin-view'
+                ]);
             }
         } else {
             if (is_array($this->value)) {
@@ -129,7 +130,9 @@ class GalleryType extends Type
                     if (!$file) continue;
 
                     $result[] = [
-                        'file' => $file->getFullJson(null, false, true, [TagerFileThumbnail::AdminList, TagerFileThumbnail::AdminView]),
+                        'file' => $file->getFullJson(null, false, true, [
+                            'tager-admin-list', 'tager-admin-view'
+                        ]),
                         'caption' => $valueItem['caption']
                     ];
                 }
