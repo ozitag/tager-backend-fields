@@ -66,6 +66,11 @@ abstract class Type implements IType
         $fileStorage = new Storage();
 
         foreach ($this->getFileIds() as $fileId) {
+
+            if ($scenario instanceof \BackedEnum) {
+                $scenario = $scenario->value;
+            }
+
             $fileStorage->setFileScenario($fileId, $scenario);
         }
     }
