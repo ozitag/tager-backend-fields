@@ -2,10 +2,8 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Enums;
 
-use OZiTAG\Tager\Backend\Core\Enums\Enum;
-
-class RepeaterView extends Enum
+enum RepeaterView: string
 {
-    const Table = 'TABLE';
-    const Block = 'BLOCK';
+    case Table = 'TABLE';
+    case Block = 'BLOCK';
 }

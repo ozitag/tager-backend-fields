@@ -4,6 +4,7 @@ namespace OZiTAG\Tager\Backend\Fields\Fields;
 
 use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\Base\Type;
+use OZiTAG\Tager\Backend\Fields\Contracts\IType;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 use OZiTAG\Tager\Backend\Fields\Enums\RepeaterView;
 use OZiTAG\Tager\Backend\Fields\TypeFactory;
@@ -12,9 +13,9 @@ use OZiTAG\Tager\Backend\Fields\Utils\ConfigLoader;
 class RepeaterField extends Field
 {
     /** @var Field[] */
-    private $fields = [];
+    private array $fields = [];
 
-    public function __construct($label, $fields = [], $view = RepeaterView::Table)
+    public function __construct($label, $fields = [], RepeaterView $view = RepeaterView::Table)
     {
         parent::__construct($label, FieldType::Repeater);
 
@@ -25,11 +26,9 @@ class RepeaterField extends Field
         }
     }
 
-    public function setViewMode($viewMode)
+    public function setViewMode(RepeaterView $viewMode)
     {
-        if (RepeaterView::hasValue($viewMode)) {
-            $this->setMetaParam('view', $viewMode);
-        }
+        $this->setMetaParam('view', $viewMode->value);
     }
 
     public function setFields($configFields)
@@ -40,7 +39,7 @@ class RepeaterField extends Field
     /**
      * @return Field[]
      */
-    public function getFields()
+    public function getFields(): array
     {
         return $this->fields;
     }
@@ -57,10 +56,7 @@ class RepeaterField extends Field
         return $result;
     }
 
-    /**
-     * @return Type
-     */
-    public function getTypeInstance()
+    public function getTypeInstance(): IType
     {
         $type = TypeFactory::create(FieldType::Repeater);
         $type->setFields($this->getFields());

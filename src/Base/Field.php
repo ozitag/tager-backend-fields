@@ -37,7 +37,7 @@ abstract class Field
         return $this;
     }
 
-    protected function setMetaParam($param, $value)
+    protected function setMetaParam(string $param, $value)
     {
         $this->meta[$param] = $value;
         return $this;

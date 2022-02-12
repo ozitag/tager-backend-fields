@@ -2,12 +2,10 @@
 
 namespace OZiTAG\Tager\Backend\Fields\Types;
 
-use Doctrine\DBAL\Types\TextType;
 use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\Base\Type;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 use OZiTAG\Tager\Backend\Fields\Fields\RepeaterField;
-use OZiTAG\Tager\Backend\Fields\TypeFactory;
 
 class GroupType extends Type
 {

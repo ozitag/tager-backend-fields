@@ -4,7 +4,6 @@ namespace OZiTAG\Tager\Backend\Fields;
 
 use OZiTAG\Tager\Backend\Fields\Contracts\IType;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
-use OZiTAG\Tager\Backend\Fields\Exceptions\InvalidTypeException;
 use OZiTAG\Tager\Backend\Fields\Types\ButtonType;
 use OZiTAG\Tager\Backend\Fields\Types\ColorType;
 use OZiTAG\Tager\Backend\Fields\Types\DateTimeType;
@@ -27,11 +26,7 @@ use OZiTAG\Tager\Backend\Fields\Types\UrlType;
 
 class TypeFactory
 {
-    /**
-     * @param $fieldType
-     * @return IType
-     */
-    public static function create($fieldType)
+    public static function create(FieldType $fieldType): IType
     {
         switch ($fieldType) {
             case FieldType::String:
@@ -72,8 +67,6 @@ class TypeFactory
                 return new RepeaterType();
             case FieldType::GROUP:
                 return new GroupType();
-            default:
-                throw new InvalidTypeException('Type "' . $fieldType . " can not be recognized");
         }
     }
 }

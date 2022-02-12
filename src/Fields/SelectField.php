@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\App;
 use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\Contracts\ISelectOptionsGenerator;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
-use OZiTAG\Tager\Backend\Utils\Helpers\ArrayHelper;
 
 class SelectField extends Field
 {
