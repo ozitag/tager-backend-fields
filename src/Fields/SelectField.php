@@ -9,16 +9,61 @@ use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 
 class SelectField extends Field
 {
+    protected bool $optionsLoaded = false;
+
+    protected array $options = [];
+
+    protected ?string $optionsGenerator;
+
+    protected ?array $optionsGeneratorParams = [];
+
+    public function getSelectType()
+    {
+        return FieldType::Select;
+    }
+
     public function __construct(string $label, ?array $options = [], ?string $optionsGenerator = null, ?array $optionsGeneratorParams = [])
     {
-        parent::__construct($label, FieldType::Select);
+        parent::__construct($label, $this->getSelectType());
 
-        if (!empty($optionsGenerator)) {
-            $class = App::make($optionsGenerator, $optionsGeneratorParams);
+        $this->optionsGenerator = $optionsGenerator;
+        $this->optionsGeneratorParams = $optionsGeneratorParams;
+
+        if ($options) {
+            $this->options = $options;
+        }
+
+        $this->optionsLoaded = false;
+    }
+
+    public function getMeta()
+    {
+        if (!$this->optionsLoaded) {
+            $this->loadOptions();
+        }
+
+        return parent::getMeta();
+    }
+
+    public function getMetaParamValue($param, $default = null)
+    {
+        if (!$this->optionsLoaded) {
+            $this->loadOptions();
+        }
+
+        return parent::getMetaParamValue($param, $default);
+    }
+
+    protected function loadOptions()
+    {
+        if (!empty($this->optionsGenerator)) {
+            $class = App::make($this->optionsGenerator, $this->optionsGeneratorParams);
             if ($class instanceof ISelectOptionsGenerator == false) {
                 throw new \Exception('Options should be as key:value array or className that implements ISelectOptionsGenerator contract');
             }
             $options = $class->generate();
+        } else {
+            $options = $this->options;
         }
 
         $optionsFiltered = [];
@@ -38,8 +83,7 @@ class SelectField extends Field
         }
 
         $this->setMetaParam('options', $optionsFiltered);
-
-        return $this;
+        $this->optionsLoaded = true;
     }
 
     public function getTypeInstance()
