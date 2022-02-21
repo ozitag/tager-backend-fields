@@ -12,6 +12,8 @@ class GroupField extends Field
 
     protected ?int $index = null;
 
+    protected ?string $prefix = null;
+
     public function __construct(string $label, array $fields)
     {
         parent::__construct($label, FieldType::GROUP);
@@ -29,17 +31,28 @@ class GroupField extends Field
         $this->index = $index;
     }
 
+    public function setNamePrefix(?string $prefix)
+    {
+        $this->prefix = $prefix;
+    }
+
     public function getJson()
     {
         $result = [
-            'name' => 'group' . ($this->index ?? ''),
+            'name' => 'group_' . ($this->prefix ? $this->prefix . '_' : '') . ($this->index ?? ''),
             'type' => $this->getType(),
             'label' => $this->getLabel(),
             'meta' => new \stdClass(),
             'fields' => []
         ];
 
+        $index = 1;
         foreach ($this->fields as $param => $field) {
+            if ($field instanceof GroupField) {
+                $field->setNamePrefix(($this->prefix ? $this->prefix . '_' : '') . $this->index);
+                $field->setGroupIndex($index++);
+            }
+
             $result['fields'][] = $field->getJson();
         }
 
