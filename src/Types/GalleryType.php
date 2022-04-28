@@ -9,6 +9,7 @@ use Ozerich\FileStorage\Repositories\FileRepository;
 use Ozerich\FileStorage\Storage;
 use OZiTAG\Tager\Backend\Fields\Base\Type;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
+use OZiTAG\Tager\Backend\Utils\Helpers\StringHelper;
 
 class GalleryType extends Type
 {
@@ -264,23 +265,25 @@ class GalleryType extends Type
         $result = [];
 
         if ($value) {
-            $data = json_decode($value, true);
+            if (StringHelper::isJson($value)) {
+                $data = json_decode($value, true);
 
-            if ($data !== null) {
-                foreach ($data as $item) {
-                    if (isset($item['id'])) {
-                        if ($this->hasCaptions) {
-                            $result[] = [
-                                'id' => (int)$item['id'],
-                                'caption' => $item['caption'] ?? ''
-                            ];
-                        } else {
-                            $result[] = (int)$item['id'];
+                if ($data !== null) {
+                    foreach ($data as $item) {
+                        if (isset($item['id'])) {
+                            if ($this->hasCaptions) {
+                                $result[] = [
+                                    'id' => (int)$item['id'],
+                                    'caption' => $item['caption'] ?? ''
+                                ];
+                            } else {
+                                $result[] = (int)$item['id'];
+                            }
                         }
                     }
                 }
-            } else if (is_string($value)) {
-                $data = explode(',', $value);
+            } else {
+                $data = explode(',', (string)$value);
                 foreach ($data as $item) {
                     if ($this->hasCaptions) {
                         $result[] = [
