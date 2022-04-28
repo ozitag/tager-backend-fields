@@ -12,7 +12,8 @@
     }
   ],
   "require": {
-    "ozitag/tager-backend-core": "^1.8"
+    "ozitag/tager-backend-core": "^1.8",
+    "ozitag/tager-backend-utils": "^1.2"
   },
   "autoload": {
     "psr-4": {
