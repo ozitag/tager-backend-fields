@@ -3,8 +3,10 @@
 namespace OZiTAG\Tager\Backend\Fields\Types;
 
 use Doctrine\DBAL\Types\TextType;
+use Illuminate\Support\Facades\App;
 use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\Base\Type;
+use OZiTAG\Tager\Backend\Fields\Contracts\IPublicValueFormatter;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 use OZiTAG\Tager\Backend\Fields\Fields\RepeaterField;
 use OZiTAG\Tager\Backend\Fields\TypeFactory;
@@ -121,6 +123,13 @@ class RepeaterType extends Type
             }
 
             $result[] = $resultRow;
+        }
+
+        if ($result && $this->publicValueFormatter) {
+            $formatter = App::make($this->publicValueFormatter);
+            if ($formatter && $formatter instanceof IPublicValueFormatter) {
+                return $formatter->format($result);
+            }
         }
 
         return $result;

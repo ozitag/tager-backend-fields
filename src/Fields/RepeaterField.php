@@ -58,7 +58,7 @@ class RepeaterField extends Field
 
     public function getTypeInstance(): IType
     {
-        $type = TypeFactory::create(FieldType::Repeater);
+        $type = parent::getTypeInstance();
         $type->setFields($this->getFields());
         return $type;
     }
