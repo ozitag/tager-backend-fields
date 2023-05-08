@@ -86,7 +86,7 @@ class FileType extends Type
             return null;
         }
 
-        return $file->getFullJson(null, false, true, ['tager-admin-list', 'tager-admin-view',]);
+        return $file->getFullJson(['tager-admin-list', 'tager-admin-view',]);
     }
 
     public function getFileIds()

@@ -120,7 +120,7 @@ class GalleryType extends Type
 
         if (!$this->hasCaptions()) {
             foreach ($files as $file) {
-                $result[] = $file->getFullJson(null, false, true, [
+                $result[] = $file->getFullJson([
                     'tager-admin-list', 'tager-admin-view'
                 ]);
             }
@@ -131,7 +131,7 @@ class GalleryType extends Type
                     if (!$file) continue;
 
                     $result[] = [
-                        'file' => $file->getFullJson(null, false, true, [
+                        'file' => $file->getFullJson([
                             'tager-admin-list', 'tager-admin-view'
                         ]),
                         'caption' => $valueItem['caption']
