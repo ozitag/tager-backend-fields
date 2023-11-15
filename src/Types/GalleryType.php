@@ -122,7 +122,7 @@ class GalleryType extends Type
             foreach ($files as $file) {
                 $result[] = $file->getFullJson([
                     'tager-admin-list', 'tager-admin-view'
-                ]);
+                ], false);
             }
         } else {
             if (is_array($this->value)) {
@@ -133,7 +133,7 @@ class GalleryType extends Type
                     $result[] = [
                         'file' => $file->getFullJson([
                             'tager-admin-list', 'tager-admin-view'
-                        ]),
+                        ], false),
                         'caption' => $valueItem['caption']
                     ];
                 }
