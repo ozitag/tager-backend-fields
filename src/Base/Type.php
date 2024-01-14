@@ -36,6 +36,11 @@ abstract class Type implements IType
         return $this->getValue();
     }
 
+    public function getLabelValue()
+    {
+        return $this->getPublicValue();
+    }
+
     public function getAdminJson()
     {
         return $this->getValue();

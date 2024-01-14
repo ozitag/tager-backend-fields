@@ -29,6 +29,10 @@ class MultiSelectType extends Type
             return [];
         }
 
+        if(is_array($this->value)){
+            return $this->value;
+        }
+
         return explode(',', $this->value);
     }
 
@@ -48,6 +52,24 @@ class MultiSelectType extends Type
         }
 
         return $this->getValue();
+    }
+
+    public function getLabelValue(){
+        $value = $this->getValue();
+
+        $result = [];
+        foreach($value as $valueItem){
+           $found = null;
+           foreach($this->options as $option){
+               if($option['value'] === $valueItem){
+                   $found = $option['label'];
+               }
+           }
+
+           $result[] = $found ?? $valueItem;
+        }
+
+        return implode(', ', $result);
     }
 
     public function getDatabaseValue()

@@ -14,7 +14,7 @@ class SelectType extends StringType
     {
         $this->options = $options;
     }
-    
+
     public function getType()
     {
         return FieldType::Select;
@@ -41,6 +41,18 @@ class SelectType extends StringType
         }
 
         return $this->getValue();
+    }
+
+    public function getLabelValue(){
+        $valueItem = $this->getValue();
+
+        foreach($this->options as $option){
+            if($option['value'] === $valueItem){
+                return $option['label'];
+            }
+        }
+
+        return $valueItem;
     }
 
     public function getAdminJson()
