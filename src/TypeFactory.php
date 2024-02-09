@@ -4,6 +4,7 @@ namespace OZiTAG\Tager\Backend\Fields;
 
 use OZiTAG\Tager\Backend\Fields\Contracts\IType;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
+use OZiTAG\Tager\Backend\Fields\Types\AjaxSelectType;
 use OZiTAG\Tager\Backend\Fields\Types\ButtonType;
 use OZiTAG\Tager\Backend\Fields\Types\ColorType;
 use OZiTAG\Tager\Backend\Fields\Types\DateTimeType;
@@ -49,6 +50,8 @@ class TypeFactory
                 return new TrueFalseType();
             case FieldType::Select:
                 return new SelectType();
+            case FieldType::AjaxSelect:
+                return new AjaxSelectType();
             case FieldType::MultiSelect:
                 return new MultiSelectType();
             case FieldType::Image:

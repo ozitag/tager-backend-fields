@@ -6,6 +6,7 @@ use OZiTAG\Tager\Backend\Fields\Base\Field;
 use OZiTAG\Tager\Backend\Fields\Enums\FieldType;
 use OZiTAG\Tager\Backend\Fields\Enums\RepeaterView;
 use OZiTAG\Tager\Backend\Fields\Exceptions\InvalidTypeException;
+use OZiTAG\Tager\Backend\Fields\Fields\AjaxSelectField;
 use OZiTAG\Tager\Backend\Fields\Fields\ButtonField;
 use OZiTAG\Tager\Backend\Fields\Fields\ColorField;
 use OZiTAG\Tager\Backend\Fields\Fields\DateField;
@@ -54,6 +55,8 @@ class FieldFactory
                 return new DateTimeField($label);
             case FieldType::TrueFalse:
                 return new TrueFalseField($label);
+            case FieldType::AjaxSelect:
+                return new AjaxSelectField($label, $meta['requestUrl']);
             case FieldType::Select:
                 $field = new SelectField($label, $meta['options'] ?? null, $meta['optionsGenerator'] ?? null, $meta['optionsGeneratorParams'] ?? []);
                 if (isset($meta['publicValueFormatter'])) {

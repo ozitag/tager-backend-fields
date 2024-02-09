@@ -14,6 +14,7 @@ enum FieldType:string
     case DateTime = 'DATETIME';
     case TrueFalse = 'TRUE_FALSE';
     case Select = 'SELECT';
+    case AjaxSelect = 'AJAX_SELECT';
     case MultiSelect = 'MULTI_SELECT';
     case Image = 'IMAGE';
     case Gallery = 'GALLERY';
