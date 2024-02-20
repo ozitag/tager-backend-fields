@@ -35,6 +35,11 @@ class AjaxSelectType extends StringType
         return $this->getValue();
     }
 
+    public function getPublicValue()
+    {
+        return $this->value && is_array($this->value) ? $this->value : null;
+    }
+
     public function loadValueFromDatabase($value)
     {
         if(StringHelper::isJson($value)) {
